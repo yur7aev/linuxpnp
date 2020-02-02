@@ -1,0 +1,69 @@
+; YSSC3P-B
+
+o<linuxpnp> call
+
+g0 z0
+o<top_light> call [1]
+g4 p2
+
+
+o<tray_origin>  call [0] [800144.5] [285.67][38.65] [25.4][25.4] [1.5] ; 1 x SQFP144-20X20/XC6SLX9
+
+#<n> = 0
+
+o<strip_origin> call [0]    [200603]    [20][126]     [0.8]  [4] ; 10 x C0603/0.01UF
+o<strip_origin> call [1]    [200603]    [30][126+5*4*#<n>] [0.8]  [4] ;  5 x C0603/0.1UF
+o<strip_origin> call [2]    [200603.1]  [40][126]     [0.8]  [4] ; 15 x C0603/10UF
+o<strip_origin> call [3]    [200603.1]  [50][126]     [0.8]  [4] ; 15 x C0603/10UF
+o<strip_origin> call [4]    [200805]    [60][126+2*4*#<n>] [0.85] [4] ;  2 x C0805/0.1UF
+o<strip_origin> call [5]    [400603.1]  [70][126+1*4*#<n>] [0.45] [4] ;  1 x LED0603/AMB
+o<strip_origin> call [6]    [400603.1]  [80][126+1*4*#<n>] [0.45] [4] ;  1 x LED0603/RED
+o<strip_origin> call [7]    [200603.2]  [90][126+1*4*#<n>] [0.8]  [4] ;  1 x C0603/91PF
+o<strip_origin> call [8]    [100603]   [100][126+2*4*#<n>] [0.42] [4] ;  2 x R0603/3K
+o<strip_origin> call [8.5]  [100603]   [100][166+1*4*#<n>] [0.42] [4] ;  1 x R0603/430
+o<strip_origin> call [9]    [100603]   [110][126+4*4*  0 ] [0.42] [4] ;  4 x R0603/2.2K
+o<strip_origin> call [9.5]  [100603]   [110][166+3*4*  0 ] [0.42] [4] ;  3 x R0603/50
+o<strip_origin> call [10]   [300603]   [120][126+1*4*#<n>] [0.50] [4] ;  1 x L0603/220UH
+;o<strip_origin> call [10.5] [100805]   [120][166+0*4] [0.45] [4] ; 1 x R0603/220UH
+o<strip_origin> call [11]   [100603]   [130][126+4*4* 00 ] [0.42] [4] ;  4 x R0603/300
+;o<strip_origin> call [11.5] [100603]   [130][166+1*4*#<n>] [0.42] [4] ;  1 x R0603/0
+o<strip_origin> call [12]   [100603]   [140][126+2*4*#<n>] [0.42] [4] ;  2 x R0603/4.7K
+o<strip_origin> call [13]   [100603]   [150][126]          [0.42] [4] ; 12 x R0603/470
+o<strip_origin> call [15]   [400323]   [170][126+3*4*#<n>] [1]    [4] ;  3 x SOD-323/4148
+o<strip_origin> call [16]   [600023.5] [180][126+1*4*#<n>] [1]    [4] ;  1 x SOT23-5/SN74CBT1G125
+o<strip_origin> call [17]   [600023.5] [190][126+1*4*#<n>] [1]    [4] ;  1 x SOT23-5/SN74AHCT1G125
+o<strip_origin> call [18]   [100603]   [200][126+1*4*#<n>] [0.42] [4] ;  1 x R0603/220
+
+o<strip_origin> call [19]   [101210]   [210][126]     [0.45] [4] ; 12 x H1210/5.6K
+o<strip_origin> call [20]   [600016.1] [224][130]     [2]   [12] ;  3 x TLP281-4/TLP281-4
+o<strip_origin> call [21]   [600024]   [242][128]     [1.5]  [8] ;  7 x QSOP24/QS3861
+o<strip_origin> call [21.5] [600024.5] [242][184]     [1.4]  [8] ;  1 x YSSOP24/NCV7240
+o<strip_origin> call [22]   [600008]   [258][128]     [1.5]  [8] ;  1 x XSO8/M25P80
+o<strip_origin> call [22.5] [600008]   [258][128+8*4] [1.5]  [8] ;  1 x XSO8/MC100ELT23
+o<strip_origin> call [23]   [905032]   [272][128]     [1]    [8] ;  1 x XO5X3.2/50MHZ
+o<strip_origin> call [23.5] [901812]   [272][153]     [1]    [8] ;  1 x F1812/0.5A
+o<strip_origin> call [24]   [600223.3] [272][178]     [1.8]  [8] ;  1 x SOT223-3/LD1117-1.2
+
+o<strip_interval> call  [21]  [6] ; QSOP24/QS3861
+o<strip_interval> call  [20]  [2] ; TLP281-4/TLP281-4
+o<strip_interval> call  [19] [11] ; H1210/5.6K     	
+o<strip_interval> call  [15]  [2] ; SOD-323/4148
+o<strip_interval> call  [13] [11] ; R0603/470
+o<strip_interval> call  [12]  [1] ; R0603/4.7K
+o<strip_interval> call  [11]  [3] ; R0603/300
+o<strip_interval> call [9.5]  [2] ; R0603/50
+o<strip_interval> call   [9]  [3] ; R0603/2.2K
+o<strip_interval> call   [8]  [1] ; R0603/3K
+o<strip_interval> call   [4]  [1] ; C0805/0.1UF
+o<strip_interval> call   [3] [14] ; C0603/10UF
+o<strip_interval> call   [2] [14] ; C0603/10UF
+o<strip_interval> call   [1]  [4] ; C0603/0.1UF
+o<strip_interval> call   [0]  [9] ; C0603/0.01UF
+
+g53 g0 x20
+g53 g0 y230
+o<top_light> call [0]
+
+(debug, all feeders set up)
+
+m2
