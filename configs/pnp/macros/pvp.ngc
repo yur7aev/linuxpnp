@@ -1,0 +1,60 @@
+;
+;
+;
+
+o<pvp> sub
+; #1 - nozzles 1, 2, 12, 21
+; #2 - feeder1
+; #3 - x place position
+; #4 - y
+; #5 - a
+; #6 - feeder2
+; #7 - x
+; #8 - y
+; #9 - a
+    o1 if [#1 eq 1 or #1 eq 2]
+	o<strip_pop>  call [#1] [#2]
+	#[1905+#1*10] = #5
+	o<bot_vision> call [#1]
+	o<pcb_place>  call [#1] [#3][#4] ;[#5]
+    o1 elseif [#1 eq 3]
+	o<tray_pick>  call [2] [#2-100] [0][0]
+	#[1905+#1*10] = #5
+	o<bot_vision2> call [2] [0] [7]
+	o<pcb_place>  call [2] [#3][#4] ;[#5]
+    o1 elseif [#1 eq 12 or #1 eq 21]
+	g55 g43 h0
+	#<f1> = ABS[#[2001+#2*8]+12]
+	#<f2> = ABS[#[2001+#6*8]-12]
+	#<d1> = [ABS[#<f1> - #<_x>] + ABS[#<_pnp_bv_x>-12 - #<f2>]]
+	#<d2> = [ABS[#<f2> - #<_x>] + ABS[#<_pnp_bv_x>-12 - #<f1>]]
+
+	; choose the shortest distance: f1->f2 or f2->f1
+	o2 if [#<d1> le #<d2>]
+		o<strip_pop>  call [1] [#2]
+		o<strip_pop>  call [2] [#6]
+	o2 else
+		o<strip_pop>  call [2] [#6]
+		o<strip_pop>  call [1] [#2]
+	o2 endif
+
+	#1915 = #5	; pre-rotation
+	#1925 = #9
+	o<bot_vision> call [2]
+	o<bot_vision> call [1]
+
+	o3 if [#3+12 gt #7-12]
+		o<pcb_place>  call [2] [#7][#8] ;[#9]
+		o<pcb_place>  call [1] [#3][#4] ;[#5]
+	o3 else
+		o<pcb_place>  call [1] [#3][#4] ;[#5]
+		o<pcb_place>  call [2] [#7][#8] ;[#9]
+	o3 endif
+    o1 else
+	(debug, pvp: bad nozzles #1)
+	m2
+    o1 endif
+
+;	g0z0
+
+o<pvp> endsub

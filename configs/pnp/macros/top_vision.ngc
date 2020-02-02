@@ -1,0 +1,41 @@
+;
+; ----  V I S I O N ----
+;
+
+; net vis-part    vision.part    <= motion.analog-out-00
+; net vis-enable  vision.enable  <= motion.digital-out-00
+; net vis-success vision.success => motion.digital-in-00
+; net vis-rc      vision.rc      => motion.analog-in-00
+; net vis-dx      vision.dx      => motion.analog-in-01
+; net vis-dy      vision.dy      => motion.analog-in-02
+; net vis-a       vision.a       => motion.analog-in-03
+
+; args
+;	#1 - part type
+; returns
+;	#1000 - part type or 0 if failed
+;	#1001 - dx
+;	#1002 - dy
+;	#1003 - angle
+o<top_vision> sub
+	m65 p0		; disable vision
+	g4 p0.2		; dwell
+	m68 e0 q#1	; set part type
+	m64 p0		; enable vision
+	m66 p0 l3 q#<_pnp_tv_to>	; wait for din-0 go high, 1 sec timeout
+	m65 p0		; disable vision
+	o1001 if [#5399 le 0]	; timeout
+		#1000 = 0
+		#1001 = 0
+		#1002 = 0
+	o1001 else
+		m66 e0 l0	; read result - package code if success
+		#1000 = [#5399]
+		m66 e1 l0	; read dx
+		#1001 = [#5399]
+		m66 e2 l0	; read dy
+		#1002 = [-#5399]
+		m66 e3 l0	; read a
+		#1003 = [-#5399]
+	o1001 endif
+o<top_vision> endsub

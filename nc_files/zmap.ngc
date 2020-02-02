@@ -1,0 +1,35 @@
+o<linuxpnp> call
+
+o<nozzle_pick> call [2] [3]
+
+#<x0> = [-42]
+#<y0> = [-2]
+#<x1> = [62]
+#<y1> = [42]
+#<dx> = [1]
+#<dy> = [1]
+
+#1 = #<x0>
+#2 = #<y0>
+g0 z0
+g54 g43 h2
+
+(PROBEOPEN /home/dmitry/zmap9.txt)
+
+o1 while [#1 ge #<x0> and #1 le #<x1>]
+	o2 while [#2 ge #<y0> and #2 le #<y1>]
+		g0 x#1 y#2
+		g0 z[#<_pnp_pcb_z2>-0.5]
+		o<zprobe> call [2]
+		#2 = [#2 + #<dy>]
+	o2 endwhile
+	#<dy> = [-#<dy>]
+	#2 = [#2 + #<dy>]
+	#1 = [#1 + #<dx>]
+o1 endwhile
+
+(PROBECLOSE)
+
+g0 z0
+
+m2

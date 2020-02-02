@@ -1,0 +1,43 @@
+;
+;
+;
+
+o<strip_place> sub
+; #1 head
+; #2 feeder
+; #3 pos
+o1 if [#[2000+#2*16] gt 0]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g55 g43 h#1		; select head
+
+	#<x> = [#[2001+#2*16] + #3*#[2003+#2*16]]
+	#<y> = [#[2002+#2*16] + #3*#[2004+#2*16]]
+	m68 e3 q200	; set torque to 20%
+	g0 z0
+	g0 x#<x> y#<y>
+	o2 if [ #1 eq 1 ]
+		g0 z[#<_pnp_strip_z1> + 1]	; TODO: add part thickness
+
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_strip_z1>] f1000
+;		g1 f1000 z[#<_pnp_strip_z1> - #1914 + 0.4]
+		#1910 = 0
+		#1914 = 0
+	o2 else
+		g0 z[#<_pnp_strip_z2> - 1]	; TODO: add part thickness
+
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_strip_z2>] f1000
+		#1920 = 0
+		#1924 = 0
+	o2 endif
+	o<vac> call [#1] [0]	; vac off
+	m65 p3 ; torque limit off
+	g4 p0.5 ; dwell
+	g0 z0
+o1 else
+	(debug, strip_place: strip #1 uninitialized)
+	m2
+o1 endif
+o<strip_place> endsub

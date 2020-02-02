@@ -1,0 +1,40 @@
+;
+; set strip feeder origin point
+;
+
+; global vars
+; 2000 part type
+; 2001 x0
+; 2002 y0
+; 2003 dx
+; 2004 dy
+; 2005 part thickness
+; 2006 current pocket
+; 2007 last pocket
+
+o<strip_ncv> sub
+; #1 - feeder no
+; #2 - part type
+; #3 - first pocket x
+; #4 - first pocket y
+; #5 - part thickness
+; #6 - tape pitch (default =4mm)
+    o3 if [#[2000+#1*16] eq 0]	; not initialized?
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g55 g43 h0		; select top camera
+
+	#[2000+#1*16] = #2
+	#[2001+#1*16] = #3
+	#[2002+#1*16] = #4
+	o2 if [ #6 lt 1]
+		#6 = 4	; default tape pitch 4mm
+	o2 endif
+	#[2003+#1*16] = 0	; dx
+	#[2004+#1*16] = #6	; dy
+	#[2005+#1*16] = #5	; part thickness
+	#[2006+#1*16] = 0	; current part
+	#[2007+#1*16] = 1	; last part
+    o3 endif
+o<strip_ncv> endsub
+

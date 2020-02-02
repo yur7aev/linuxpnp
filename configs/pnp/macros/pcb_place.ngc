@@ -1,0 +1,71 @@
+;
+;
+;
+
+o<pcb_place> sub
+;	#1 head
+;	#2 x
+;	#3 y
+;	#4 a
+;	#1910/#1920 part type
+;	#1911/#1921 dx
+;	#1912/#1922 dy
+;	#1913/#1923 angle
+;	#1914/#1924 part thickness
+; returns
+;	#1910..1924/#1920..1924 zero
+
+o1 if [#1 eq 1 or #1 eq 2]
+	g92.1			; turn off G92 offsets
+	g54 g43 h#1		; select head
+
+	#<ox> = [#[1901+#1*10]]
+	#<oy> = [#[1902+#1*10]]
+	#<a> = [#4 + #[1903+#1*10]]
+	#<dx> = [#<ox>*cos[#<a>]-#<oy>*sin[#<a>] + 0.0]
+	#<dy> = [#<ox>*sin[#<a>]+#<oy>*cos[#<a>]]
+
+	(debug, shift:#<dx>,#<dy> a:#<a>)
+
+	m67 e#1 q[-#<a>]	; c-axis rotation
+	m67 e3 q300	; set torque to 30%
+	g0 z0
+
+	o2 if [#1 eq 1]
+		g0 x[#2-#<dx>] y[#3-#<dy>] ; a[-#<a>]
+		g0 z[#<_pnp_pcb_z1> + #1914*2 + 0.3]
+; g4 p0.5                
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_pcb_z1> + #1914] f2000
+		o<vac> call [#1] [0]	; vac off
+		g4 p0.3 ; dwell
+		g1 z[#<_z> + 0.3]
+		#1910 = 0
+		#1911 = 0
+		#1912 = 0
+		#1913 = 0
+		#1914 = 0
+	o2 else
+		g0 x[#2-#<dx>] y[#3-#<dy>] ; b[-#<a>]
+		g0 z[#<_pnp_pcb_z2> - #1924*2 - 0.3]
+; g4 p0.5
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_pcb_z2> - #1924] f2000
+		o<vac> call [#1] [0]	; vac off
+		g4 p0.3 ; dwell
+		g1 z[#<_z> - 0.3]
+		#1920 = 0
+		#1921 = 0
+		#1922 = 0
+		#1923 = 0
+		#1924 = 0
+	o2 endif
+	m65 p3 ; torque limit off
+;	m67 e#1 q0	; reset c-axis rotation
+;m1
+;	g0 z0
+o1 else
+	(debug, pcb_place: bad head #1)
+	m2
+o1 endif
+o<pcb_place> endsub

@@ -1,0 +1,272 @@
+;	0=X	1=Y	2=Z
+
+PA01	0x0010	0x0000	0x0000	; **STY	Control mode          0000-0F60h 0000
+PA02	0x0000	0x0000	0x0000	; **REG	Regenerative option   0000-73FFh 0000
+PA03	0x0000	0x0001	0x0001	; *ABS	Absolute position detection system 0000-0001h 0000
+PA04	0x0100	0x0100	0x0100	; *AOP1	Function selection A-1   0000-F230h 0000
+PA05	0	0	0	; *FBP	For manufacturer setting 0-65535 0
+PA06	1	1	1	; *CMX	For manufacturer setting 1-32767              1
+PA07	1	1	1	; *CDV	For manufacturer setting 1-32767              1
+PA08	0x0001	0x0001	0x0001	; ATU	Auto tuning mode         0000-0003h           0001
+PA09	23	19	26	; RSP	Auto tuning response     1-32                 12
+PA10	100	100	100	; INP	In-position range pulse cmd unit 0-65535              100
+PA11	1000.0	1000.0	1000.0	; TLP	For manufacturer setting % 0.0-1000.0           1000.0
+PA12	1000.0	1000.0	1000.0	; TLN	For manufacturer setting % 0.0-1000.0           1000.0
+PA13	0x0000	0x0000	0x0000	;	For manufacturer setting 0000-0000h 0000
+PA14	1	1	1	; *POL	Rotation direction selection 0-1                  0
+PA15	4000	4000	4000	; *ENR	Encoder output pulses    pulse/rev 1-65535 4000
+PA16	0	0	0	; *ENR2	For manufacturer setting 0-65535    0
+PA17	0x0000	0x0000	0x0000	; **MSR	For manufacturer setting 0000-FFFFh 0000
+PA18	0x0000	0x0000	0x0000	; **MTY	For manufacturer setting 0000-FFFFh 0000
+PA19	0xabcd	0x000b	0x000b	; *BLK	Parameter write inhibit  0000-FFFFh 000B
+				; 
+PB01	0x0000	0x0000	0x0000	; FILT	Adaptive tuning mode (Adapt filter 2) 0000-0002h 0000
+PB02	0x0000	0x0000	0x0000	; VRFT	Vib suppression control filter tuning mode 0000-0002h 0000
+PB03	0	0	0	; TFLG	For manufacturer setting rad/s 0-18000 0
+PB04	0	0	0	; FFC	Feed forward gain % 0-100 0
+PB05	500	500	500	; FFCF	For manufacturer setting rad/s 10-4500 500
+PB06	4.7	5.0	1.5	; GD2	Ratio of load inertia mom to motor in mom times 0.0-300.0 7.0
+PB07	100	100	100	; PG1	Model loop gain rad/s 1-2000 24
+PB08	150	200	350	; PG2	Position loop gain rad/s 1-1000 37
+PB09	2373	2000	2780	; VG2	Speed loop gain rad/s 20-50000 823
+PB10	8.3	8.7	3.5	; VIC	Speed integral compensation ms 0.1-1000.0 33.7
+PB11	980	980	980	; VDC	Speed differential compensation 0-1000 980
+PB12	0	0	0	; OVA	Overshoot compensation % 0-100 0
+PB13	4500	4500	4500	; NH1	Machine resonance suppression filter 1 Hz 100-4500             4500
+PB14	0x0000	0x0000	0x0000	; NHQ1	Notch shape selection 1 0000-0330h 0000
+PB15	4500	4500	4500	; NH2	Machine resonance suppression filter 2 Hz 100-4500             4500
+PB16	0x0000	0x0000	0x0000	; NHQ2	Notch shape selection 2 0000-0331h 0000
+PB17	0x0000	0x0000	0x0000	; NHF	Automatic setting parameter 0000-031Fh 0000
+PB18	3141	3141	3141	; LPF	Low-pass filter setting rad/s 100-18000 3141
+PB19	100.0	100.0	100.0	; VRF1	Vibration suppression control vibration frequency setting Hz 0.1-100.0 100.0
+PB20	100.0	100.0	100.0	; VRF2	Vibration suppression control resonance frequency setting Hz 0.1-100.0 100.0
+PB21	0.00	0.00	0.00	; VRF3	For manufacturer setting 0.00-1.00 0.00
+PB22	0.00	0.00	0.00	; VRF4	For manufacturer setting 0.00-1.00 0.00
+PB23	0x0000	0x0000	0x0000	; VFBF	Low-pass filter selection 0000-0111h 0000
+PB24	0x0000	0x0000	0x0000	; *MVS	Slight vibration suppression control selection 0000-0231h 0000
+PB25	0x0000	0x0000	0x0000	; *BOP1	For manufacturer setting 0000-1F02h 0000
+PB26	0x0000	0x0000	0x0000	; *CDP	Gain changing selection 0000-0014h 0000
+PB27	10	10	10	; CDL	Gain changing condition 0-9999 10
+PB28	1	1	1	; CDT	Gain changing time constant ms 0-100 1
+PB29	7.0	7.0	7.0	; GD2B	Gain changing rat. of load inertia to mot. Inertia moment times 0.0-300.0 7.0
+PB30	37	37	37	; PG2B	Gain changing position loop gain rad/s 1-2000 37
+PB31	823	823	823	; VG2B	Gain changing speed loop gain rad/s 20-50000 823
+PB32	33.7	33.7	33.7	; VICB	Gain changing speed integral compensation ms 0.1-5000.0 33.7
+PB33	100.0	100.0	100.0	; VRF1B	Gain changing vib. supp. cont vib. freq. setting Hz 0.1-100.0 100.0
+PB34	100.0	100.0	100.0	; VRF2B	Gain changing vib. supp. cont res. freq. setting Hz 0.1-100.0 100.0
+PB35	0.00	0.00	0.00	; VRF3B	For manufacturer setting 0.00-1.00 0.00
+PB36	0.00	0.00	0.00	; VRF4B	For manufacturer setting 0.00-1.00 0.00
+PB37	100	100	100	; VPI	For manufacturer setting pulse 0-32767 100
+PB38	0.0	0.0	0.0	; TGW1	For manufacturer setting 0.0-20.0 0.0
+PB39	0.0	0.0	0.0	; TGW2	For manufacturer setting 0.0-20.0 0.0
+PB40	0.0	0.0	0.0	; TGW3	For manufacturer setting 0.0-20.0 0.0
+PB41	1125	1125	1125	; VRFF1	For manufacturer setting Hz 1-1125 1125
+PB42	1125	1125	1125	; VRFF2	For manufacturer setting Hz 1-1125 1125
+PB43	0x0004	0x0004	0x0004	; VRFQ	For manufacturer setting 0000-0304h 0004
+PB44	0.0	0.0	0.0	; JM2	For manufacturer setting times 0.0-30.0 0.0
+PB45	0x0000	0x0000	0x0000	; CNHF	Vibration suppression control filter 2 0000-FFFFh 0000
+				; 
+PC01	3	3	3	; ERZ	Error excessive alarm level rev 0-200 3
+PC02	0	0	0	; MBR	Electromagnetic brake sequence output ms 0-1000               0
+PC03	0x0000	0x0000	0x0000	; *ENRS	Encoder output pulses selection 0000-1141h 0000
+PC04	0x0000	0x0000	0x0000	; **COP1 Function selection C-1 0000-1220h 0000
+PC05	0x0000	0x0000	0x0000	; **COP2 Function selection C-2 0000-0001h 0000
+PC06	0x0000	0x0000	0x0000	; *COP3	Function selection C-3  0000-3021h 0000
+PC07	50	50	50	; ZSP	Zero speed  r/min       0-10000 50
+PC08	0	0	0	; OSL	For manufacturer setting r/min 0-20000 0
+PC09	0x0000	0x0000	0x0000	; MOD1	Analog monitor 1 output  0000-141Fh 0000
+PC10	0x0001	0x0001	0x0001	; MOD2	Analog monitor 2 output  0000-141Fh 0001
+PC11	0	0	0	; MO1	Analog monitor 1 offset  mV -999-999 0
+PC12	0	0	0	; MO2	Analog monitor 2 offset  mV -999-999 0
+PC13	0	0	0	; MOSDL	Analog monitor feedback position output standard data Low pulse -9999-9999           0
+PC14	0	0	0	; MOSDH	Analog monitor feedback position output standard data High  10000pulse -9999-9999 0
+PC15	0	0	0	; *SNO	For manufacturer setting station 0-31 0
+PC16	0x0000	0x0000	0x0000	; *COP3A	Function selection C-3A 0000-0152h 0000
+PC17	0x0000	0x0000	0x0000	; **COP4	Function selection C-4  0000-0012h 0000
+PC18	0x0000	0x0000	0x0000	; *COP5	For manufacturer setting        0000-1110h 0000
+PC19	0x0000	0x0000	0x0000	; *COP6	For manufacturer setting        0000-1113h 0000
+PC20	0x0000	0x0000	0x0000	; *COP7	Function selection C-7          0000-1112h 0000
+PC21	0x0000	0x0000	0x0000	; *BPS	Alarm history clear             0000-0001h 0000
+PC22	0x0000	0x0000	0x0000	; FAL	For manufacturer setting pulse  0000-FFFFh 0000
+PC23	0x0000	0x0000	0x0000	; FWN	For manufacturer setting pulse  0000-FFFFh 0000
+PC24	0x0000	0x0000	0x0000	; RSBR      For manufacturer setting ms 0000-FFFFh 0000
+PC25	0x0000	0x0000	0x0000	; RSBS	For manufacturer setting     ms 0000-FFFFh 0000
+PC26	0x0100	0x0000	0x0000	; **COP8 For manufacturer setting       0000-FFFFh 0000
+PC27	0x0001	0x0000	0x0000	; **COP9 For manufacturer setting       0000-FFFFh 0000
+PC28	0x0000	0x0000	0x0000	; *COPA	For manufacturer setting        0000-FFFFh 0000
+PC29	0x0000	0x0000	0x0000	;	For manufacturer setting        0000-FFFFh 0000
+PC30	0x0000	0x0000	0x0000	; RBRX	For manufacturer setting     ms 0000-FFFFh 0000
+PC31	0x0000	0x0000	0x0000	; RSUP	For manufacturer setting 0.0001rev 0000-FFFFh 0000
+PC32	0x0000	0x0000	0x0000	;	For manufacturer setting        0000-FFFFh 0000
+				; 
+PD01	0x0000	0x0000	0x0000	; *DIA1	For manufacturer setting    0000-FFFFh           0000
+PD02	0x0000	0x0000	0x0000	; *DIA2	For manufacturer setting    0000-FFFFh           0000
+PD03	0x0020	0x0020	0x0020	; *DI1	For manufacturer setting    0000-003Fh           0000
+PD04	0x0021	0x0021	0x0021	; *DI2	For manufacturer setting    0000-003Fh           0000
+PD05	0x0022	0x0022	0x0022	; *DI3	For manufacturer setting    0000-003Fh           0000
+PD06	0x0000	0x0000	0x0000	; *DI4	For manufacturer setting    0000-003Fh           0000
+PD07	0x0005	0x0005	0x0005	; *DO1	Output signal dev selection 1 (CN3-13) 0000-003Fh 0005
+PD08	0x0004	0x0004	0x0004	; *DO2	Output signal dev selection 2 (CN3-9)  0000-003Fh 0004
+PD09	0x0003	0x0003	0x0003	; *DO3	Output signal dev selection 3 (CN3-15) 0000-003Fh 0003
+PD10	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD11	0x0004	0x0004	0x0004	; *DIF	For manufacturer setting    0000-0004h           0004
+PD12	0x0000	0x0000	0x0000	; *DOP1	For manufacturer setting    0000-0001h           0000
+PD13	0x0000	0x0000	0x0000	; *DOP2	For manufacturer setting    0000-1110h           0000
+PD14	0x0000	0x0000	0x0000	; *DOP3	Function selection D-3      0000-1110h           0000
+PD15	0x0000	0x0000	0x0000	; *IDCS	For manufacturer setting    0000-0011h           0000
+PD16	0x0000	0x0000	0x0000	; *MD1	For manufacturer setting    0000-FFFFh           0000
+PD17	0x0000	0x0000	0x0000	; *MD2	For manufacturer setting    0000-FFFFh           0000
+PD18	0x0000	0x0000	0x0000	; *MD3	For manufacturer setting    0000-FFFFh           0000
+PD19	0x0000	0x0000	0x0000	; *MD4	For manufacturer setting    0000-FFFFh           0000
+PD20	0	0	0	; *SLA1	For manufacturer setting    0-32                 0
+PD21	0	0	0	; *SLA2	For manufacturer setting    0-32                 0
+PD22	0	0	0	; *SLA3	For manufacturer setting    0-32                 0
+PD23	0	0	0	; *SLA4	For manufacturer setting    0-32                 0
+PD24	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD25	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD26	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD27	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD28	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PD29	0x0000	0x0000	0x0000	; *MSMD1 For manufacturer setting   0000-FFFFh           0000
+PD30	0x0000	0x0000	0x0000	; TLC	For manufacturer setting    %     0000-01FFh     0000
+PD31	0x0000	0x0000	0x0000	; VLC	For manufacturer setting    %     0000-01FFh     0000
+PD32	0x0000	0x0000	0x0000	; VLL	For manufacturer setting    r/min 0000-7FFFh     0000
+				; 
+PE01	0x0000	0x0000	0x0000	; **FCT1 For manufacturer setting   0000-F001h           0000
+PE02	0x0102	0x0102	0x0102	; FCR	For manufacturer setting    0000-020Fh           0102
+PE03	0x0003	0x0002	0x0002	; *FCT2	For manufacturer setting    0000-1013h           0002
+PE04	625	1	1	; **FBN	For manufacturer setting    1-65535              1
+PE05	4096	1	1	; **FBD	For manufacturer setting    1-65535              1
+PE06	400	400	400	; BC1	For manufacturer setting    r/min 1-50000        400
+PE07	100	100	100	; BC2	For manufacturer setting    kpulse 1-20000       100
+PE08	10	10	10	; DUF	For manufacturer setting    rad/s 0-4500         10
+PE09	0x0000	0x0000	0x0000	;	For manufacturer setting    0000-FFFFh           0000
+PE10	0x0000	0x0000	0x0000	; FCT3	For manufacturer setting    0000-1310h           0000
+PE11	0	0	0	; ZRR	For manufacturer setting    0-1000               0
+PE12	40	40	40	; ZRKP	For manufacturer setting    % 0-100              40
+PE13	0xfffe	0xfffe	0xfffe	; *ZRRD	For manufacturer setting    0000-FFFFh           FFFE
+PE14	0x0111	0x0111	0x0111	; MV1	For manufacturer setting    0000-3333h           0111
+PE15	20	20	20	; MV2	For manufacturer setting    ms 0-1000            20
+PE16	0x0000	0x0000	0x0000	; *EOP1	For manufacturer setting    0000-0011h           0000
+PE17	0x0000	0x0000	0x0000	; *EOP2	For manufacturer setting    0000-1011h           0000
+PE18	0x0000	0x0000	0x0000	; IIRC11 For manufacturer setting   0000-FFFFh           0000
+PE19	0x0000	0x0000	0x0000	; IIRC12 For manufacturer setting   0000-FFFFh           0000
+PE20	0x0000	0x0000	0x0000	; IIRC13 For manufacturer setting   0000-FFFFh           0000
+PE21	0x0000	0x0000	0x0000	; IIRC14 For manufacturer setting   0000-FFFFh           0000
+PE22	0x0000	0x0000	0x0000	; IIRC15 For manufacturer setting   0000-FFFFh           0000
+PE23	0x0000	0x0000	0x0000	; IIRC16 For manufacturer setting   0000-FFFFh           0000
+PE24	0x0000	0x0000	0x0000	; IIRC17 For manufacturer setting       0000-FFFFh           0000
+PE25	0x0000	0x0000	0x0000	; IIRC18 For manufacturer setting       0000-FFFFh           0000
+PE26	0x0000	0x0000	0x0000	; IIRC21 Filter coefficient 2-1         0000-FFFFh           0000
+PE27	0x0000	0x0000	0x0000	; IIRC22 Filter coefficient 2-2         0000-FFFFh           0000
+PE28	0x0000	0x0000	0x0000	; IIRC23 Filter coefficient 2-3         0000-FFFFh           0000
+PE29	0x0000	0x0000	0x0000	; IIRC24 Filter coefficient 2-4         0000-FFFFh           0000
+PE30	0x0000	0x0000	0x0000	; IIRC25 Filter coefficient 2-5         0000-FFFFh           0000
+PE31	0x0000	0x0000	0x0000	; IIRC26 Filter coefficient 2-6         0000-FFFFh           0000
+PE32	0x0000	0x0000	0x0000	; IIRC27 Filter coefficient 2-7         0000-FFFFh           0000
+PE33	0x0000	0x0000	0x0000	; IIRC28 Filter coefficient 2-8         0000-FFFFh           0000
+PE34	1	0x0000	0x0000	; **FBN2 For manufacturer setting       0-32767              0000
+PE35	1	0x0000	0x0000	; **FBD2 For manufacturer setting       0-32767              0000
+PE36	0.0	0x0000	0x0000	; AWZN      For manufacturer setting       0.0-100.0            0000
+PE37	0.00	0x0000	0x0000	; AKZ       For manufacturer setting       0.00-1.00            0000
+PE38	0.00	0x0000	0x0000	; ADZ       For manufacturer setting       0.00-1.00h           0000
+PE39	0x0000	0x0000	0x0000	; BT1       For manufacturer setting       ms             0000-FFFFh           0000
+PE40	0x0000	0x0000	0x0000	; TRCG      For manufacturer setting       0000-FFFFh           0000
+				; 
+PF01	0x0000	0x0000	0x0000	; *FOP1     Function selection F-1 (not supported)                                     0000-0112h           0000
+PF02	0x0000	0x0000	0x0000	; *FOP2     Function selection F-2 (not supported)                                     0000-0000h           0000
+PF03	0x0000	0x0000	0x0000	; *FOP3     Function selection F-3                                                     0000-0111h           0000
+PF04	0	0	0	; UIC       USB/RS-422 time-out selects                                 s              0-60                 0
+PF05	0x0000	0x0000	0x0000	; *FOP4     Function selection F-4                                                     0000-0063h           0000
+PF06	0x0000	0x0000	0x0000	; *FOP5     Function selection F-5 (not supported)                                     0000-0002h           0000
+PF07	0x0000	0x0000	0x0000	; *FOP6     Function selection F-6                                                     0000-0022h           0000
+PF08	0x0000	0x0000	0x0000	; *FOP7     Function selection F-7                                                     0000-0115h           0000
+PF09	10000	10000	10000	; VLI       Speed limit (not supported)                                 r/min          0-10000              10000
+PF10	100	100	100	; SRT       Return speed (not supported)                                r/min          1-50000              100
+PF11	100	100	100	; TRT       Return acceleration time constant (not supported)           ms             0-1000               100
+PF12	100	100	100	; DBT       Software dynamic brake operate time (not supported)         ms             0-10000              100
+PF13	0x0000	0x0000	0x0000	; *FOP8     Function selection F-8                                                     0000-10F1h           0000
+PF14	10	10	10	; ZAT       Home position setting miss detection time                   100ms          1-100                10
+PF15	0x0000	0x0000	0x0000	; *MPGS     Manual pulse generator input (not supported)                               0000-3142h           0000
+PF16	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+				; 
+PH01	0	0	0	; PN1       Bus volt. calibration data 1                                               0-1000               0
+PH02	0	0	0	; PN2       Bus volt. calibration data 2                                               0-1000               0
+PH03	0x0000	0x0000	0x0000	; UIO1      U phase current calibration data 1                                         0000-FFFFh           0000
+PH04	0x0000	0x0000	0x0000	; VIO1      V phase current calibration data 1                                         0000-FFFFh           0000
+PH05	0x0000	0x0000	0x0000	; UIO2      U phase current calibration data 2                                         0000-FFFFh           0000
+PH06	0x0000	0x0000	0x0000	; VIO2      V phase current calibration data 2                                         0000-FFFFh           0000
+PH07	0	0	0	; P5V       Control circuit board volt proof data (not supported)                      0000-FFFFh           0000
+PH08	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PH09	0x0000	0x0000	0x0000	; *HOP1     Function selection H-1                                                     0000-0004h           0000
+PH10	1000.0	1000.0	1000.0	; TLX       Final stage torque limit                                    %              0.0-1000.0           1000.0
+PH11	0x0000	0x0000	0x0000	; *TINF1    Tester information 1 test times/OK times                                   0000-FFFFh           0000
+PH12	0x0000	0x0000	0x0000	; *TINF2    Tester information 2 tester No./year                                       0000-FFFFh           0000
+PH13	0x0000	0x0000	0x0000	; *TINF3    Tester information 3 month/date                                            0000-FFFFh           0000
+PH14	0x0000	0x0000	0x0000	; *TINF4    Tester information 4 hour/minute                                           0000-FFFFh           0000
+PH15	0x0000	0x0000	0x0000	; **AMP     Amplifier capacity                                                         0000-FFFFh           0000
+PH16	0	0	0	; *ATP      Input power type                                                           0-1                  0
+PH17	0x0000	0x0000	0x0000	; **DEF     Parameter default                                                          0000-5112h           0000
+PH18	0x0000	0x0000	0x0000	; **TST     Design evaluation test mode                                                0000-0001h           0000
+PH19	0x0000	0x0000	0x0000	; *HIS      Amplifier maintenance history (not supported)                              0000-FFFFh           0000
+PH20	0x0000	0x0000	0x0000	; **MSR2    Motor series 2                                                             0000-FFFFh           0000
+PH21	0x0000	0x0000	0x0000	; **MTY2    Motor type 2                                                               0000-FFFFh           0000
+PH22	0x0000	0x0000	0x0000	; DEBG0     Debug card function selection                                              0000-FFFFh           0000
+PH23	0x0000	0x0000	0x0000	; DEBG1     Debug card D/A output address 1                                            0000-FFFFh           0000
+PH24	0x0000	0x0000	0x0000	; DEBG2     Debug card D/A output address 2                                            0000-FFFFh           0000
+PH25	0x0000	0x0000	0x0000	; DEBG3     Debug card bit output address 1                                            0000-FFFFh           0000
+PH26	0x0000	0x0000	0x0000	; DEBG4     Debug card bit output address 2                                            0000-FFFFh           0000
+PH27	0x0100	0x0100	0x0100	; DEBG5     Debug card D/A output magnification 1                                      0000-FFFFh           0100
+PH28	0x0100	0x0100	0x0100	; DEBG6     Debug card D/A output magnification 2                                      0000-FFFFh           0100
+PH29	0x0000	0x0000	0x0000	; **FLSH    Flash write mode                                                           0000-FFFFh           0000
+PH30	0x0000	0x0000	0x0000	; **CCID    Control circuit board ID                                                   0000-FFFFh           0000
+					; 
+PO01	0x0000	0x0000	0x0000	; **OCD     For manufacturer setting                                                   0000-FFFFh           0000
+PO02	0x0000	0x0000	0x0000	; *ESA      For manufacturer setting                                                   0000-FFFFh           0000
+PO03	0x0000	0x0000	0x0000	; **EID1    For manufacturer setting                                                   0000-FFFFh           0000
+PO04	0x0000	0x0000	0x0000	; **EID2    For manufacturer setting                                                   0000-FFFFh           0000
+PO05	0x0000	0x0000	0x0000	; *MTHM     For manufacturer setting                                                   0000-FFFFh           0000
+PO06	0x0000	0x0000	0x0000	; D1AD1     For manufacturer setting                                    mV             0000-FFFFh           0000
+PO07	0x0000	0x0000	0x0000	; D1AD2     For manufacturer setting                                    mV             0000-FFFFh           0000
+PO08	0x0000	0x0000	0x0000	; D1DA1     For manufacturer setting                                    mV             0000-FFFFh           0000
+PO09	0x0000	0x0000	0x0000	; D1DA2     For manufacturer setting                                    mV             0000-FFFFh           0000
+PO10	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO11	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO12	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO13	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO14	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO15	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PO16	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+					; 
+PS01	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS02	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS03	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS04	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS05	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS06	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS07	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS08	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS09	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS10	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS11	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS12	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS13	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS14	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS15	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS16	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS17	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS18	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS19	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS20	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS21	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS22	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS23	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS24	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS25	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS26	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS27	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS28	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS29	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS30	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS31	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000
+PS32	0x0000	0x0000	0x0000	;           For manufacturer setting                                                   0000-FFFFh           0000

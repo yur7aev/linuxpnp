@@ -1,0 +1,12 @@
+;
+; turn top light on/off
+;
+
+o<top_light> sub
+; #1 - off/on
+	o1 if [#1 gt 0]
+		m64 p9
+	o1 else
+		m65 p9
+	o1 endif
+o<top_light> endsub

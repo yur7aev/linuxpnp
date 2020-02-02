@@ -1,0 +1,34 @@
+;
+; strip_pop - pick a part from a strip, advance current the part counter
+; Copyright (c) 2019, Dmitry Yurtaev <dmitry@yurtaev.com>
+;
+
+
+; global vars
+; 2000 part type
+; 2001 x0
+; 2002 y0
+; 2003 dx
+; 2004 dy
+; 2005 part thickness
+; 2006 current pocket
+; 2007 last pocket
+
+o<strip_pop> sub
+; #1 head
+; #2 feeder
+
+o1 if [#[2000+#2*16] gt 0]	; part type?
+	#<p> = #[2006+#2*16]	; current pos
+	o2 if [#<p> lt #[2007+#2*16]]		; not empty?
+		#[2006+#2*16] = [#<p> + 1]	; move pos
+		o<strip_pick> call [#1] [#2] [#<p>]
+	o2 else
+		(debug, strip_pop: strip #2 is empty!)
+		m2
+	o2 endif
+o1 else
+	(debug, strip_pop: strip #2 uninitialized)
+	m2
+o1 endif
+o<strip_pop> endsub

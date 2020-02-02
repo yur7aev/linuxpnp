@@ -1,0 +1,29 @@
+;
+;
+;
+
+; global vars
+; 3000 part type
+; 3001 x0
+; 3002 y0
+; 3003 dx
+; 3004 dy
+; 3005 part thickness
+
+o<tray_origin> sub
+; #1 - tray no
+; #2 - part type
+; #3 - feeder x
+; #4 - feeder y
+; #5 - x pitch
+; #6 - y pitch
+; #7 - part thickness
+
+	#[3000+#1*8] = #2	; part
+	#[3001+#1*8] = #3	; x
+	#[3002+#1*8] = #4	; y
+	#[3003+#1*8] = #5	; dx
+	#[3004+#1*8] = #6	; dy
+	#[3005+#1*8] = #7	; part thickness
+o<tray_origin> endsub
+

@@ -1,0 +1,61 @@
+;
+;
+;
+
+o<pcb_pick> sub
+;	#1 head
+;	#2 x
+;	#3 y
+;	#4 a
+;	#5 thickness
+;	#6 type
+; returns
+;	#1910/#1920 part type
+;	#1911/#1921 0
+;	#1912/#1922 0
+;	#1913/#1923 angle
+;	#1914/#1924 part thickness
+
+f800
+o1 if [#1 eq 1 or #1 eq 2]
+	g92.1			; turn off G92 offsets
+	g54 g43 h#1		; select head
+
+	m68 e3 q200	; set torque to 20%
+	o2 if [#1 eq 1]
+		#1910 = #6	; part type
+		#1911 = 0
+		#1912 = 0
+		#1913 = #4
+		#1914 = #5
+		g0 z0
+		g0 x[#2] y[#3]
+		g0 z[#<_pnp_pcb_z1> + #1914*2 + 0.3]
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_pcb_z1> + #1914] f2000
+		o<vac> call [#1] [1]	; vac on
+		g4 p0.2 ; dwell
+		g1 z[#<_z> + 0.3]
+	o2 else
+		#1920 = #6	; part type
+		#1921 = 0
+		#1922 = 0
+		#1923 = #4
+		#1924 = #5
+		g0 z0
+		g0 x[#2] y[#3]
+		g0 z[#<_pnp_pcb_z2> - #1924*2 - 0.3]
+		m62 p3		; z torque limit on
+		g38.3 z[#<_pnp_pcb_z2> - #1924] f2000
+		o<vac> call [#1] [1]	; vac on
+		g4 p0.2 ; dwell
+		g1 z[#<_z> - 0.3]
+	o2 endif
+	m65 p3 ; torque limit off
+	m67 e#1 q[-#4]	; rotate to 0
+	g0 z0	; breaks blending
+o1 else
+	(debug, pcb_pick: bad head #1)
+	m2
+o1 endif
+o<pcb_pick> endsub

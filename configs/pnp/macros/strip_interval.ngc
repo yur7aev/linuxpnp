@@ -1,0 +1,45 @@
+;
+;
+;
+
+; global vars
+; 2000 part type
+; 2001 x0
+; 2002 y0
+; 2003 dx
+; 2004 dy
+; 2005 thickness
+; 2006 current pocket
+; 2007 last pocket
+
+o<strip_interval> sub
+; #1 - feeder no
+; #2 - last part
+
+o1 if [ #[2000+#1*16] gt 0]
+  o4 if [ #2 gt 0]
+    o3 if [ #[2003+#1*16] eq 0]	; not calibrated yet?
+	(xdebug, int #1 / #2000)
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g55 g43 h0		; select top camera
+	g0 z0
+	; move to the last component, calculate y separation
+	g0 x#[2001+#1*16] y[#[2002+#1*16] + #2*#[2004+#1*16]]
+	#<part> = [#[2000+#1*16]]
+	o<top_vision> call [#[2000+#1*16]]
+	o2 if [ #1000 gt 0]
+	  #[2003+#1*16] = [#1001 / #2]
+	  #[2004+#1*16] = [#1002 / #2 + #[2004+#1*16]]
+	  #[2007+#1*16] = [#2 + 1]	; last pocket
+	o2 else
+		(debug, strip_interval: #1/#2 top vision failed, #<part>)
+		m2
+	o2 endif
+    o3 endif
+  o4 endif
+o1 else
+	(debug, strip_interval: strip #1 uninitialized)
+	m2
+o1 endif
+o<strip_interval> endsub

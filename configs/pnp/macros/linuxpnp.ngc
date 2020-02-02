@@ -1,0 +1,81 @@
+;
+; initialize linuxpnp global vars
+;
+
+o<linuxpnp> sub
+	#<_dz2> = 0.05	; difference between nozzle heights
+
+	; bottom camera
+	#<_pnp_bv_x> = [36.5]
+	#<_pnp_bv_y> = [38.1]
+;	#<_pnp_bv_y> = [38.39-0.02-0.015+0.04]
+;	#<_pnp_bv_z1> = -17.5
+	#<_pnp_bv_z1> = -21.6
+	#<_pnp_bv_z2> = [ #<_dz2> - #<_pnp_bv_z1> ]
+	#<_pnp_bv_to> = 3
+
+	; top camera
+	#<_pnp_tv_to> = 3
+
+	; nozzle rack
+	#<_pnp_nzr_x> = 174.3
+	#<_pnp_nzr_y> = 214.0
+	#<_pnp_nzr_yc> = 197.0	; entry position
+	#<_pnp_nzr_z1> = -25.0
+	#<_pnp_nzr_z2> = [ #<_dz2> - #<_pnp_nzr_z1> ]
+	#<_pnp_nzr_feed> = 8000
+
+	; -26.73 56.58
+
+	; pcb height
+	#<_pnp_pcb_z1> = [-26.65 - 0.15]
+	#<_pnp_pcb_z2> = [26.65 + 0.15]
+	; #<_pnp_pcb_z2> = [ #<_dz2> - #<_pnp_pcb_z1> ]
+
+	; strip feeders height
+	#<_pnp_strip_z1> = -26.75	;-26.65 -27.1
+	#<_pnp_strip_z2> = [ #<_dz2> - #<_pnp_strip_z1> ]
+	#<_pnp_strip_feed> = 3000
+
+	; tray feered height
+	#<_pnp_tray_z1> = -25.25
+	#<_pnp_tray_z2> = [ #<_dz2> - #<_pnp_tray_z1> ]
+
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0 r0	; reset G55 offsets
+
+	#<_pnp> = 1
+
+o<linuxpnp> endsub
+
+; G54 - PCB coordinates
+; G55 - machine coordinates
+
+; #5171 - nozzle 1 tip, persistent
+; #5172 - nozzle 2 tip, persistent
+
+;head 1 vision correction
+; 1910 - part type
+; 1911 - delta x
+; 1912 - delta y
+; 1913 - part thickness
+; 1914 - angle
+; 1915 - pre-rotate angle
+
+;head 2 vision correction
+; 1920 - part type
+; 1921
+; 1922
+; 1923
+; 1924 - angle
+; 1925 - pre-rotate angle
+
+;strip feeder
+; 2000 part type
+; 2001 x0
+; 2002 y0
+; 2003 dx
+; 2004 dy
+; 2005 part thickness
+; 2006 current pocket
+; 2007 last pocket

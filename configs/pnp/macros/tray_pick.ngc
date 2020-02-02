@@ -1,0 +1,62 @@
+;
+;
+;
+
+; TQFP144 tray
+; x=285.67 y=38.65 z=25.1
+
+; global vars
+; 3000 part type
+; 3001 x0
+; 3002 y0
+; 3003 dx
+; 3004 dy
+; 3005 part thickness
+
+o<tray_pick> sub
+; #1 head
+; #2 tray
+; #3 row
+; #4 col
+
+o1 if [#[3000+#2*8] gt 0]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g55 g43 h#1		; select head
+
+	#<x> = [#[3001+#2*8] + #4*#[3003+#2*8]]
+	#<y> = [#[3002+#2*8] + #3*#[3004+#2*8]]
+
+	o2 if [ #1 eq 1 ]
+;		g10 l20 p1 a0	; reset rotation to zero in G54
+;		g10 l20 p2 a0	; and G55
+		g0 z0
+		g0 x#<x> y#<y>
+		g0 z[#<_pnp_tray_z1> + 0.5]	; TODO: add part thickness
+		g1 f3000 z#<_pnp_tray_z1>
+		#1910 = #[3000+#2*8]	; part type
+		#1911 = 0	; x compenstaion
+		#1912 = 0	; y
+		#1913 = 0	; a
+		#1914 = #[3005+#2*8]	; part thickness
+	o2 else
+;		g10 l20 p1 b0
+;		g10 l20 p2 b0
+		g0 z0
+		g0 x#<x> y#<y>
+		g0 z[#<_pnp_tray_z2> - 0.5]	; TODO: add part thickness
+		g1 f3000 z#<_pnp_tray_z2>
+		#1920 = #[3000+#2*8]	; part thickness
+		#1921 = 0	; x
+		#1922 = 0	; y
+		#1923 = 0	; a
+		#1924 = #[3005+#2*8]	; part thickness
+	o2 endif
+	o<vac> call [#1] [1]	; vac on
+	g4 p0.05 ; dwell
+;	g0 z0
+o1 else
+	(debug, tray_pick: tray #1 uninitialized)
+	m2
+o1 endif
+o<tray_pick> endsub

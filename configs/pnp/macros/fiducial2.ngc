@@ -1,0 +1,43 @@
+;
+;
+;
+
+o<fiducial2> sub
+; #1 - x1
+; #2 - y1
+; #3 - x2
+; #4 - y2
+
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g54 g43 h0		; select top camera
+	g10 l2 p1 r0		; reset rotation
+	g0 z0
+	g0 x#1 y#2
+	o<top_vision> call [11]	; 1x1mm square
+	o1 if [ #1000 gt 0]
+		g10 l20 p1 x[#1-#1001] y[#2-#1002]	; move G54
+		(xdebug, #1001 #1002)
+
+		g0 x#3 y#4
+		o<top_vision> call [11]	; 1x1mm square
+		o2 if [ #1000 gt 0]
+			#<x> = [#3 - #1]
+			#<y> = [#4 - #2]
+			#<a1> = [atan[#<y>]/[#<x>]]
+			#<a2> = [atan[#<y>+#1002]/[#<x>+#1001]]
+			#<a> = [#<a2> - #<a1>]
+			#<dx> = [#3-#1001]
+			#<dy> = [#4-#1002]
+			g10 l2 p1 r#<a>
+			g10 l20 p1 x#<dx> y#<dy>
+			(xdebug, pcb #<x>,#<y> @ #<a>)
+		o1 else
+			(xdebug, fiducial2: 2nd fiducial failed)
+			m2
+		o2 endif
+	o1 else
+		(debug, fiducial2: 1st fiducial failed)
+		m2
+	o1 endif
+o<fiducial2> endsub

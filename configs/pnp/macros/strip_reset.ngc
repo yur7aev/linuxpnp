@@ -1,0 +1,29 @@
+;
+; reset strip feeder to an uninitialized state
+;
+
+; global vars
+; 2000 part type
+; 2001 x0
+; 2002 y0
+; 2003 dx
+; 2004 dy
+; 2005 part thickness
+; 2006 current pocket
+; 2007 last pocket
+
+o<strip_reset> sub
+; #1 - feeder no from
+; #2 - feeder no to
+	o1 do
+		#[2000+#1*16] = 0
+		#[2001+#1*16] = 0
+		#[2002+#1*16] = 0
+		#[2003+#1*16] = 0
+		#[2004+#1*16] = 0
+		#[2005+#1*16] = 0
+		#[2006+#1*16] = 0
+		#[2007+#1*16] = 0
+		#1 = [#1 + 0.5]
+	o1 while [#1 le #2]
+o<strip_reset> endsub

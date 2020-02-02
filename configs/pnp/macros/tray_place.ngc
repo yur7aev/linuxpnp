@@ -1,0 +1,44 @@
+;
+;
+;
+
+o<tray_place> sub
+; #1 head
+; #2 feeder
+; #3 row
+; #4 col
+o1 if [#[3000+#2*8] gt 0]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0	; reset G55 offsets
+	g55 g43 h#1		; select head
+
+	#<x> = [#[3001+#2*8] + #4*#[3003+#2*8]]
+	#<y> = [#[3002+#2*8] + #3*#[3004+#2*8]]
+	g0 z0
+	m67 e#1 q[#[1903+#1*10]]	; rotate to 0
+	g0 x#<x> y#<y>
+	o2 if [ #1 eq 1 ]
+		g0 z[#<_pnp_tray_z1> + 0.5]	; TODO: add part thickness
+		g1 f3000 z#<_pnp_tray_z1>
+		#1910 = 0
+		#1911 = 0
+		#1912 = 0
+		#1913 = 0
+		#1914 = 0
+	o2 else
+		g0 z[#<_pnp_tray_z2> - 0.5]	; TODO: add part thickness
+		g1 f3000 z#<_pnp_tray_z2>
+		#1920 = 0
+		#1921 = 0
+		#1922 = 0
+		#1923 = 0
+		#1924 = 0
+	o2 endif
+	o<vac> call [#1] [0]	; vac off
+	g4 p0.25 ; dwell
+	g0 z0
+o1 else
+	(debug, tray_place: tray #1 uninitialized)
+	m2
+o1 endif
+o<tray_place> endsub

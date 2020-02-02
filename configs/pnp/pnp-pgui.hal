@@ -1,0 +1,95 @@
+#
+# NYX v2.1
+#
+# http://www.yurtaev.com
+#
+
+net nyx-ready nyx.0.ready => pyvcp.led-ready
+net nyx-phase nyx.0.phase => pyvcp.phase
+
+net trq0 nyx.0.servo-00.trq-fb => pyvcp.trq0
+net trq1 nyx.0.servo-01.trq-fb => pyvcp.trq1
+net trq2 nyx.0.servo-02.trq-fb => pyvcp.trq2
+
+net offline0 nyx.0.servo-00.offline => pyvcp.led-offline0
+net offline1 nyx.0.servo-01.offline => pyvcp.led-offline1
+net offline2 nyx.0.servo-02.offline => pyvcp.led-offline2
+net offline3 nyx.0.servo-03.offline => pyvcp.led-offline3
+net offline4 nyx.0.servo-04.offline => pyvcp.led-offline4
+
+net ready0 nyx.0.servo-00.ready => pyvcp.led-ready0
+net ready1 nyx.0.servo-01.ready => pyvcp.led-ready1
+net ready2 nyx.0.servo-02.ready => pyvcp.led-ready2
+net ready3 nyx.0.servo-03.ready => pyvcp.led-ready3
+net ready4 nyx.0.servo-04.ready => pyvcp.led-ready4
+
+net offline0 => pyvcp.led-ready0.disable
+net offline1 => pyvcp.led-ready1.disable
+net offline2 => pyvcp.led-ready2.disable
+net offline3 => pyvcp.led-ready3.disable
+net offline4 => pyvcp.led-ready4.disable
+
+net alarm0 pyvcp.led-alarm0
+net alarm1 pyvcp.led-alarm1
+net alarm2 pyvcp.led-alarm2
+net alarm3 nyx.0.servo-03.alarm pyvcp.led-alarm3
+net alarm4 nyx.0.servo-04.alarm pyvcp.led-alarm4
+
+net offline0 => pyvcp.led-alarm0.disable
+net offline1 => pyvcp.led-alarm1.disable
+net offline2 => pyvcp.led-alarm2.disable
+net offline3 => pyvcp.led-alarm3.disable
+net offline4 => pyvcp.led-alarm4.disable
+
+net enabled0 nyx.0.servo-00.enabled => pyvcp.led-enabled0
+net enabled1 nyx.0.servo-01.enabled => pyvcp.led-enabled1
+net enabled2 nyx.0.servo-02.enabled => pyvcp.led-enabled2
+net enabled3 nyx.0.servo-03.enabled => pyvcp.led-enabled3
+net enabled4 nyx.0.servo-04.enabled => pyvcp.led-enabled4
+
+net reset-alarm <= pyvcp.reset-alarm
+net reset-alarm => nyx.0.servo-00.reset-alarm
+net reset-alarm => nyx.0.servo-01.reset-alarm
+net reset-alarm => nyx.0.servo-02.reset-alarm
+net reset-alarm => nyx.0.servo-03.reset-alarm
+net reset-alarm => nyx.0.servo-04.reset-alarm
+
+net code0 nyx.0.servo-00.alarm-code => pyvcp.code0
+net code1 nyx.0.servo-01.alarm-code => pyvcp.code1
+net code2 nyx.0.servo-02.alarm-code => pyvcp.code2
+net code3 nyx.0.servo-03.alarm-code => pyvcp.code3
+net code4 nyx.0.servo-04.alarm-code => pyvcp.code4
+
+# -----------------------------------------
+
+net pump-on   halui.mdi-command-00 <= pyvcp.pump-on
+net pump-off  halui.mdi-command-01 <= pyvcp.pump-off
+net top-light-on  halui.mdi-command-02 <= pyvcp.top-light-on
+net top-light-off halui.mdi-command-03 <= pyvcp.top-light-off
+net bot-light-on  halui.mdi-command-04 <= pyvcp.bot-light-on
+net bot-light-off halui.mdi-command-05 <= pyvcp.bot-light-off
+net vac1-on   halui.mdi-command-06 <= pyvcp.vac1-on
+net vac1-off  halui.mdi-command-07 <= pyvcp.vac1-off
+net vent1-on  halui.mdi-command-08 <= pyvcp.vent1-on
+net vent1-off halui.mdi-command-09 <= pyvcp.vent1-off
+net vent2-on  halui.mdi-command-10 <= pyvcp.vent2-on
+net vent2-off halui.mdi-command-11 <= pyvcp.vent2-off
+net vac2-on   halui.mdi-command-12 <= pyvcp.vac2-on
+net vac2-off  halui.mdi-command-13 <= pyvcp.vac2-off
+
+# net pump nyx.0.yio-00.out-08 <= pyvcp.pump
+# net top-light nyx.0.yio-00.out-09 <= pyvcp.top-light
+# net bot-light nyx.0.yio-00.out-10 <= pyvcp.bot-light
+# net valve1 nyx.0.yio-00.out-11 <= pyvcp.valve1
+# net valve2 nyx.0.yio-00.out-12 <= pyvcp.valve2
+# net valve3 nyx.0.yio-00.out-13 <= pyvcp.valve3
+# net valve4 nyx.0.yio-00.out-14 <= pyvcp.valve4
+
+net x-trq-clamped => pyvcp.x-trq-clamped
+net x-trq-limit   => pyvcp.x-trq-limited
+
+net y-trq-clamped => pyvcp.y-trq-clamped
+net y-trq-limit   => pyvcp.y-trq-limited
+
+net z-trq-clamped => pyvcp.z-trq-clamped
+net z-trq-limit   => pyvcp.z-trq-limited

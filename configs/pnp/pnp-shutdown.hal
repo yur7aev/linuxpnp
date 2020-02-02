@@ -1,0 +1,27 @@
+# servo power
+unlinkp nyx.0.out-00
+setp    nyx.0.out-00 0
+
+# pump
+unlinkp nyx.0.yio-00.out-08
+setp    nyx.0.yio-00.out-08 0
+
+# top light
+unlinkp nyx.0.yio-00.out-09
+#setp    nyx.0.yio-00.out-09 0
+
+# valve 1
+unlinkp nyx.0.yio-00.out-11
+setp    nyx.0.yio-00.out-11 0
+
+# valve 2
+unlinkp nyx.0.yio-00.out-12
+setp    nyx.0.yio-00.out-12 0
+
+# valve 3
+unlinkp nyx.0.yio-00.out-13
+setp    nyx.0.yio-00.out-13 0
+
+# valve 4
+unlinkp nyx.0.yio-00.out-14
+setp    nyx.0.yio-00.out-14 0

@@ -1,0 +1,68 @@
+;
+;
+;
+
+; #5171 - nozzle 1 tip
+; #5172 - nozzle 2 tip
+
+o<nozzle_pick> sub
+; #1 head
+; #2 nozzle no
+
+o1 if [#1 eq 1 or #1 eq 2]
+#2 = [round[#2]]	; tip/pocket number
+o2 if [#5171 ne #2 and #5172 ne #2]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0 r0	; reset G55 offsets
+	g55 g43 h#1		; select head
+	f#<_pnp_nzr_feed>
+
+	#3 = #[5170+#1]	; current tip
+
+	o3 if [#3 ne 0]		; drop nozzle
+		g0 z0
+		g0 x[[#3-1]*25 + #<_pnp_nzr_x>] y#<_pnp_nzr_yc>
+		o4 if [#1 eq 1]
+			g0 z#<_pnp_nzr_z1>
+			g1 y#<_pnp_nzr_y>
+			g4 p0.1
+			g1 z-15	; safe z above nozzle rack
+			#5171 = 0
+		o4 else
+			g0 z#<_pnp_nzr_z2>
+			g1 y#<_pnp_nzr_y>
+			g4 p0.1
+			g1 z15	; safe z above nozzle rack
+			#5172 = 0
+		o4 endif
+	o3 else
+		g0 z0
+	o3 endif
+
+	g0 x[[#2-1]*25 + #<_pnp_nzr_x>] y#<_pnp_nzr_y>
+	m68 e3 q500	; set torque to 50%
+	m64 p3		; z torque limit on
+
+	o5 if [#1 eq 1]
+		g0 z[#<_pnp_nzr_z1> - 0.8]		; go past stop
+		g4 p0.1
+		g1 z#<_pnp_nzr_z1>
+		#5171 = #2
+	o5 else
+		g0 z[#<_pnp_nzr_z2> + 0.8]		; go past stop
+		g4 p0.1
+		g1 z#<_pnp_nzr_z2>
+		#5172 = #2
+	o5 endif
+
+	m65 p3		; z torque limit off
+	g1 y#<_pnp_nzr_yc>
+	g0 z0
+o2 else
+	(xdebug, nozzle_pick: pocket #2 is empty!)
+o2 endif
+o1 else
+	(debug, nozzle_pick: bad head #1)
+	m2
+o1 endif
+o<nozzle_pick> endsub

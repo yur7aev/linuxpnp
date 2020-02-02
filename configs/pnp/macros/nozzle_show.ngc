@@ -1,0 +1,10 @@
+;
+;
+;
+
+; #5171 - head 1 nozzle
+; #5172 - head 2 nozzle
+
+o<nozzle_show> sub
+	(debug, nozzle_show: #5171 #5172)
+o<nozzle_show> endsub

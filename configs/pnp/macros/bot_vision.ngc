@@ -1,0 +1,97 @@
+;
+;
+;
+
+o<bot_vision> sub
+;	#1 head
+;	#2 part type [if zero take #1910/#1920]
+;	#3 z offset [optional]
+;
+;	#1910/#1920 part type
+;	#1914/#1924 part thickness
+; returns
+;	#1000 - part type or 0 if failed
+;	#1001,#1911/#1921 - dx
+;	#1002,#1912/#1922 - dy
+;	#1003,#1913/#1923 - angle
+#1 = [round[#1]]
+o1 if [ #1 eq 1 or #1 eq 2]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0 r0	; reset G55 offsets
+	g55 g43 h#1		; select head
+
+	o4 if [#2 eq 0]
+		#2 = #[1900+#1*10]	; part type (bottom)
+	o4 endif
+
+	m65 p0			; disable vision
+	g0 z0
+
+	; pre-rotation
+	o5 if [#1915 ne 0]
+		m67 e1 q[-#1915]	; c-axis rotation
+		#1915 = 0
+	o5 endif
+	o6 if [#1925 ne 0]
+		m67 e2 q[-#1925]	; c-axis rotation
+		#1925 = 0
+	o6 endif
+
+	g0 x#<_pnp_bv_x> y#<_pnp_bv_y>	; bottom cam
+	m62 p10			; bot light on (sync)
+	o2 if [ #1 eq 1 ]
+		o21 if [#1914 ge 2]
+			#3 = [#3 + 5]
+		o21 endif
+		g0 z[#<_pnp_bv_z1> + #1914 + #3]	; part thickness
+	o2 else
+		o22 if [#1924 ge 2]
+			#3 = [#3 + 5]
+		o22 endif
+		g0 z[#<_pnp_bv_z2> - #1924 - #3]
+	o2 endif
+
+;	g4 p0.2			; camera pipeline delay
+	m68 e0 q[-#2]		; set part type
+	m68 e4 q#[1904+#1*10]	; set part thickness cv.h
+
+	m64 p0			; enable vision
+	m66 p0 l3 q#<_pnp_bv_to>	; wait for din-0 go high, 3 sec timeout
+
+	o3 if [#5399 le 0]	; timeout
+		#1000 = 0
+		#1001 = 0
+		#1002 = 0
+		#1003 = 0
+
+		(debug, bot_vision: timout)
+	o3 else
+		m66 e0 l0	; read result - package code if success
+		#1000 = [#5399]
+		m66 e1 l0	; read dx
+		#1001 = [#5399]
+		m66 e2 l0	; read dy
+		#1002 = [-#5399]
+		m66 e3 l0	; read a
+		#1003 = [#5399 - 0.6]
+
+		; save compenation
+		#[1901+#1*10] = [#1001]	; dx
+		#[1902+#1*10] = [#1002]	; dy
+		#[1903+#1*10] = [#1003]	; a
+
+		(debug, bv #1001,#1002@#1003)
+	o3 endif
+;m1
+;	m65 p0			; disable vision
+	m65 p10			; bot light off
+	m68 e0 q0		; switch back to top camera
+	m68 e1 q0	; reset
+	m68 e2 q0	; reset
+
+;	g0 z0
+o1 else
+	(debug, bot_vision: bad head #1)
+	m2
+o1 endif
+o<bot_vision> endsub

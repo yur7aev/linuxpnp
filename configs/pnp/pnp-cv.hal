@@ -1,0 +1,17 @@
+#!/usr/bin/halcmd -f
+################ V I S I O N 
+
+net cv-part    cv.part    <= motion.analog-out-00
+net cv-h       cv.h       <= motion.analog-out-04
+net cv-enable  cv.enable  <= motion.digital-out-00
+net cv-z       cv.z       <= joint.2.pos-cmd
+net cv-success cv.success => motion.digital-in-00
+net cv-rc      cv.rc      => motion.analog-in-00
+net cv-dx      cv.dx      => motion.analog-in-01
+net cv-dy      cv.dy      => motion.analog-in-02
+net cv-a       cv.a       => motion.analog-in-03
+
+net cv-jog-enable	cv.jog-enable => axis.x.jog-enable axis.y.jog-enable
+net cv-jog-scale	cv.jog-scale  => axis.x.jog-scale  axis.y.jog-scale
+net cv-jog-x		cv.jog-x      => axis.x.jog-counts
+net cv-jog-y		cv.jog-y      =>                   axis.y.jog-counts

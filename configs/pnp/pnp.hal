@@ -1,0 +1,162 @@
+#
+# nyx v2.1
+#
+# http://www.yurtaev.com
+#
+
+# first load all the RT modules that will be needed
+# kinematics
+loadrt [KINS]KINEMATICS
+
+# motion controller, get name and thread periods from ini file
+loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS num_dio=16 num_aio=8
+addf motion-command-handler servo-thread
+addf motion-controller servo-thread
+
+loadrt nyx maxdrives=6 param_file=[NYX]PARAMS mon=0
+addf nyx.0 servo-thread
+
+loadrt minmax
+addf minmax.0 servo-thread
+
+net nyx-phase minmax.0.in
+
+#-------- hard stops homing --------
+
+setp nyx.0.servo-00.forward-torque 300
+setp nyx.0.servo-00.reverse-torque 300
+net x-trq-clamped joint.0.home-sw-in <= nyx.0.servo-00.torque-clamped
+net x-trq-limit   joint.0.homing     => nyx.0.servo-00.limit-torque 
+
+setp nyx.0.servo-01.forward-torque 300
+setp nyx.0.servo-01.reverse-torque 300
+net y-trq-clamped joint.1.home-sw-in <= nyx.0.servo-01.torque-clamped
+net y-trq-limit   joint.1.homing     => nyx.0.servo-01.limit-torque 
+
+# z-probing
+# m68 e3 q200		; set torque to 20%
+# m64 p2		; z torque limit on
+# g38.3 z-28 f500	; probe
+# g1 z-25 f2000
+# o1 if [#5070]
+#	probe ok
+# o1 endif
+
+net z-trq-clamped motion.digital-in-03  <= nyx.0.servo-02.torque-clamped => motion.probe-input
+net z-trq-limit   motion.digital-out-03 => nyx.0.servo-02.limit-torque
+net z-trq-set     motion.analog-out-03  => nyx.0.servo-02.forward-torque nyx.0.servo-02.reverse-torque
+
+#-------- motion --------
+
+setp nyx.0.servo-00.pos-scale [JOINT_0]SCALE
+setp nyx.0.servo-01.pos-scale [JOINT_1]SCALE
+setp nyx.0.servo-02.pos-scale [JOINT_2]SCALE
+setp nyx.0.servo-03.pos-scale [JOINT_3]SCALE
+setp nyx.0.servo-04.pos-scale [JOINT_4]SCALE
+
+setp nyx.0.servo-00.vel-scale 100
+setp nyx.0.servo-01.vel-scale 100
+setp nyx.0.servo-02.vel-scale 100
+
+net x-pos-fb joint.0.motor-pos-fb <= nyx.0.servo-00.pos-fb
+net y-pos-fb joint.1.motor-pos-fb <= nyx.0.servo-01.pos-fb
+net z-pos-fb joint.2.motor-pos-fb <= nyx.0.servo-02.pos-fb
+#net a-pos-fb joint.3.motor-pos-fb <= nyx.0.servo-03.pos-fb
+#net b-pos-fb joint.4.motor-pos-fb <= nyx.0.servo-04.pos-fb
+
+net x-cmd joint.0.motor-pos-cmd => nyx.0.servo-00.pos-cmd
+net y-cmd joint.1.motor-pos-cmd => nyx.0.servo-01.pos-cmd
+net z-cmd joint.2.motor-pos-cmd => nyx.0.servo-02.pos-cmd
+#net a-cmd joint.3.motor-pos-cmd => nyx.0.servo-03.pos-cmd
+#net b-cmd joint.4.motor-pos-cmd => nyx.0.servo-04.pos-cmd
+
+net alarm0 nyx.0.servo-00.alarm => joint.0.amp-fault-in
+net alarm1 nyx.0.servo-01.alarm => joint.1.amp-fault-in
+net alarm2 nyx.0.servo-02.alarm => joint.2.amp-fault-in
+
+net x-enable joint.0.amp-enable-out => nyx.0.servo-00.enable
+net y-enable joint.1.amp-enable-out => nyx.0.servo-01.enable
+net z-enable joint.2.amp-enable-out => nyx.0.servo-02.enable
+
+# m67 e1 q<a-pos>
+# m67 e2 q<b-pos>
+# g0 z
+
+loadrt limit3 names=l3a,l3b
+addf l3a servo-thread
+addf l3b servo-thread
+setp l3a.maxv 3600
+setp l3b.maxv 3600
+setp l3a.maxa 20000
+setp l3b.maxa 20000
+loadrt increment names=inca,incb
+addf inca servo-thread
+addf incb servo-thread
+
+net a-enable joint.3.amp-enable-out => nyx.0.servo-03.enable inca.enable
+net b-enable joint.4.amp-enable-out => nyx.0.servo-04.enable incb.enable
+
+net a-inc-cmd motion.analog-out-01 => inca.in
+net b-inc-cmd motion.analog-out-02 => incb.in
+
+net a-cmd inca.out => l3a.in
+net b-cmd incb.out => l3b.in
+
+net a-mot-cmd l3a.out => nyx.0.servo-03.pos-cmd
+net b-mot-cmd l3b.out => nyx.0.servo-04.pos-cmd
+
+net estop => nyx.0.servo-00.power
+net estop => nyx.0.servo-01.power
+net estop => nyx.0.servo-02.power
+net estop => nyx.0.servo-03.power
+net estop => nyx.0.servo-04.power
+
+#-------- misc --------
+
+net estop <= iocontrol.0.user-enable-out
+net estop => iocontrol.0.emc-enable-in
+
+net tool-change iocontrol.0.tool-change => iocontrol.0.tool-changed
+net tool-prepare iocontrol.0.tool-prepare => iocontrol.0.tool-prepared
+
+# setp nyx.0.encoder-0.cpr 400
+
+# -------------------------------------------------
+
+# analog outputs
+# 00	cv.part
+# 01	a axis angle
+# 02	b axis andle
+# 03	z-trq-set
+
+# analog inputs
+# 00	cv.rc
+# 01	cv.dx
+# 02	cv.dy
+# 03	cv.a
+
+# digital inputs
+# 00	cv.success
+# 01
+# 02	
+# 03	z-trq-clamped
+
+# digital outputs
+# 00	cv.enable
+# 01
+# 02	
+# 03	z-trq-limit
+
+loadrt or2
+addf or2.0 servo-thread
+net z-trq-clamped => or2.0.in0
+net top-light-gcode motion.digital-out-09 => or2.0.in1
+net top-light nyx.0.yio-00.out-09 <= or2.0.out
+
+net pump      nyx.0.yio-00.out-08 <= motion.digital-out-08
+#net top-light nyx.0.yio-00.out-09 <= motion.digital-out-09
+net bot-light nyx.0.yio-00.out-10 <= motion.digital-out-10
+net valve1    nyx.0.yio-00.out-11 <= motion.digital-out-11
+net valve2    nyx.0.yio-00.out-12 <= motion.digital-out-12
+net valve3    nyx.0.yio-00.out-13 <= motion.digital-out-13
+net valve4    nyx.0.yio-00.out-14 <= motion.digital-out-14

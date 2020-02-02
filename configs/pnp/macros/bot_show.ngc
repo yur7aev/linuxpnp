@@ -1,0 +1,68 @@
+;
+;
+;
+
+o<bot_vision> sub
+;   #1 head
+;   #2 part type
+; returns
+;	#1000 - part type or 0 if failed
+;	#1001 - dx
+;	#1002 - dy
+;	#1003 - angle
+#1 = [round[#1]]
+o1 if [ #1 eq 1 or #1 eq 2]
+	g92.1			; turn off G92 offsets
+	g10 l2 p2 x0 y0 z0 r0	; reset G55 offsets
+	g55 g43 h#1		; select head
+
+	g0 z0
+	g0 x#<_pnp_bv_x> y#<_pnp_bv_y>	; bottom cam
+	o2 if [ #1 eq 1 ]
+		g0 z[#<_pnp_bv_z1> + #1914]	; part thickness
+	o2 else
+		g0 z[#<_pnp_bv_x2> - #1924]
+	o2 endif
+
+	m64 p10			; bot light on
+g4 p0.5			; dwell
+	m68 e0 q[-#2]		; set part type
+	m64 p0			; enable vision
+	m66 p0 l3 q3		; wait for din-0 go high, 1 sec timeout
+
+	o3 if [#5399 le 0]	; timeout
+		(debug, bottom vision timout)
+		#1000 = 0
+		#1001 = 0
+		#1002 = 0
+		#1003 = 0
+	o3 else
+		m66 e0 l0	; read result - package code if success
+		#1000 = [#5399]
+		m66 e1 l0	; read dx
+		#1001 = [#5399]
+		m66 e2 l0	; read dy
+		#1002 = [-#5399]
+		m66 e3 l0	; read a
+		#1003 = [#5399]
+
+		; save compenation
+;		#[1901+#1*10] = [#1001]
+;		#[1902+#1*10] = [#1002]
+;		#[1903+#1*10] = [#1003]
+
+		(debug, bv:#1001,#1002@#1003)
+
+	o3 endif
+
+	m1
+	m65 p0			; disable vision
+	m65 p10			; bot light off
+	m68 e0 q0		; switch back to top camera
+
+;	g0 z0
+o1 else
+	(debug, bot_vision: bad head #1)
+	m2
+o1 endif
+o<bot_vision> endsub

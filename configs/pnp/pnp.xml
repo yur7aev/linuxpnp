@@ -1,0 +1,125 @@
+<!--
+    NYX v2.1
+
+    http://www.yurtaev.com
+-->
+
+<pyvcp>
+<label> <text>"Torque:"</text> </label>
+<bar> <halpin>"trq0"</halpin> <min_>-150</min_> <max_>150</max_> </bar>
+<bar> <halpin>"trq1"</halpin> <min_>-150</min_> <max_>150</max_> </bar>
+<bar> <halpin>"trq2"</halpin> <min_>-150</min_> <max_>150</max_> </bar>
+
+<labelframe text="Controller">
+    <hbox>
+	<led> <halpin>"led-ready"</halpin> </led>
+	<number>
+	    <halpin>"phase"</halpin>
+	    <format>"+2.2f"</format>
+	</number>
+    </hbox>
+</labelframe>
+
+<labelframe text="Amp">
+    <hbox>
+	<led> <halpin>"led-offline0"</halpin> <on_color>"#d0d0d0"</on_color><off_color>"green"</off_color> </led>
+	<led> <halpin>"led-offline1"</halpin> <on_color>"#d0d0d0"</on_color><off_color>"green"</off_color> </led>
+	<led> <halpin>"led-offline2"</halpin> <on_color>"#d0d0d0"</on_color><off_color>"green"</off_color> </led>
+	<led> <halpin>"led-offline3"</halpin> <on_color>"#d0d0d0"</on_color><off_color>"green"</off_color> </led>
+	<led> <halpin>"led-offline4"</halpin> <on_color>"#d0d0d0"</on_color><off_color>"green"</off_color> </led>
+	<label> <text>"Online"</text> </label>
+    </hbox>
+    <hbox>
+	<led> <halpin>"led-ready0"</halpin> <off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-ready1"</halpin> <off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-ready2"</halpin> <off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-ready3"</halpin> <off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-ready4"</halpin> <off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<label> <text>"Ready"</text> </label>
+    </hbox>
+    <hbox>
+	<led> <halpin>"led-enabled0"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"led-enabled1"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"led-enabled2"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"led-enabled3"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"led-enabled4"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<label> <text>"Enabled"</text> </label>
+    </hbox>
+    <hbox>
+	<led> <halpin>"x-trq-limited"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"y-trq-limited"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"z-trq-limited"</halpin> <on_color>"green"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<label> <text>"Trq limited"</text> </label>
+    </hbox>
+    <hbox>
+	<led> <halpin>"x-trq-clamped"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"y-trq-clamped"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<led> <halpin>"z-trq-clamped"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> </led>
+	<label> <text>"Trq clamped"</text> </label>
+    </hbox>
+</labelframe>
+
+<labelframe text="Amp alarm">
+    <hbox>
+	<led> <halpin>"led-alarm0"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-alarm1"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-alarm2"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-alarm3"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<led> <halpin>"led-alarm4"</halpin> <on_color>"red"</on_color><off_color>"#d0d0d0"</off_color> <disable_pin>True</disable_pin></led>
+	<button> <halpin>"reset-alarm"</halpin> <text>"Rst"</text> </button>
+    </hbox>
+    <hbox>
+	<u32> <halpin>"code0"</halpin> <format>"02x"</format> </u32>
+	<u32> <halpin>"code1"</halpin> <format>"02x"</format> </u32>
+	<u32> <halpin>"code2"</halpin> <format>"02x"</format> </u32>
+	<u32> <halpin>"code3"</halpin> <format>"02x"</format> </u32>
+	<u32> <halpin>"code4"</halpin> <format>"02x"</format> </u32>
+    </hbox>
+</labelframe>
+
+<labelframe text="Outputs">
+    <hbox>
+	<button> <halpin>"pump-on"</halpin> <text>"pump on"</text> </button>
+	<button> <halpin>"pump-off"</halpin> <text>"pump off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"top-light-on"</halpin> <text>"top on"</text> </button>
+	<button> <halpin>"top-light-off"</halpin> <text>"top off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"bot-light-on"</halpin> <text>"bot on"</text> </button>
+	<button> <halpin>"bot-light-off"</halpin> <text>"bot off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"vac1-on"</halpin> <text>"vac1 on"</text> </button>
+	<button> <halpin>"vac1-off"</halpin> <text>"vac1 off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"vent1-on"</halpin> <text>"vent1 on"</text> </button>
+	<button> <halpin>"vent1-off"</halpin> <text>"vent1 off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"vent2-on"</halpin> <text>"vent2 on"</text> </button>
+	<button> <halpin>"vent2-off"</halpin> <text>"vent2 off"</text> </button>
+    </hbox>
+    <hbox>
+	<button> <halpin>"vac2-on"</halpin> <text>"vac2 on"</text> </button>
+	<button> <halpin>"vac2-off"</halpin> <text>"vac2 off"</text> </button>
+    </hbox>
+<!--
+	<checkbutton> <halpin>"pump"</halpin> <text>"Pump"</text> </checkbutton>
+	<checkbutton> <halpin>"top-light"</halpin> <text>"Top light"</text> </checkbutton>
+	<checkbutton> <halpin>"bot-light"</halpin> <text>"Bottom light"</text> </checkbutton>
+
+    <hbox>
+	<label><text>"Valves"</text></label>
+	<checkbutton> <halpin>"valve1"</halpin> <text>"1"</text> </checkbutton>
+	<checkbutton> <halpin>"valve2"</halpin> <text>"2"</text> </checkbutton>
+	<checkbutton> <halpin>"valve3"</halpin> <text>"3"</text> </checkbutton>
+	<checkbutton> <halpin>"valve4"</halpin> <text>"4"</text> </checkbutton>
+    </hbox>
+-->
+</labelframe>
+
+</pyvcp>
+

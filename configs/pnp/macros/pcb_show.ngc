@@ -1,0 +1,16 @@
+;
+;
+;
+
+; position top camera to PCB coordinaes (G54)
+
+o<pcb_show> sub
+; #1 x
+; #2 y
+	g92.1			; turn off G92 offsets
+	g54 g43 h0		; select pcb coomdinates, top camera
+	m68 e0 q0		; switch vision to top camera
+
+	g0 z0
+	g0 x#1 y#2
+o<pcb_show> endsub
